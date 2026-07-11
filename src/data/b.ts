@@ -1,6 +1,6 @@
-import type {Event} from "../types.ts";
+import type { Event } from '../types.ts';
 
 export default {
-    id: 'b',
-    name: 'b'
-} as Event
+	id: 'b',
+	name: 'b'
+} as Event;
