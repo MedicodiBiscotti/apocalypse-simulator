@@ -3,6 +3,7 @@
 	import EventCard from './lib/EventCard.svelte';
 	import type { Event } from './types.ts';
 	import { shuffleArray } from './lib/random-utils';
+	import GameOver from "./lib/GameOver.svelte";
 
 	const modules = import.meta.glob('./data/*.ts', { import: 'default' }) as Record<
 		string,
@@ -16,12 +17,18 @@
 		events.push(event);
 	}
 	shuffleArray(events);
+
+	let currentIndex = $state(0);
 </script>
 
 <main>
-	{#each events as event}
-		<EventCard clazz="mb-4" {event} />
-	{/each}
+	{#if currentIndex < events.length }
+		<p>{currentIndex + 1}/{events.length}</p>
+		<EventCard clazz="mb-4" event={events[currentIndex]} />
+		<button onclick={() => currentIndex++}>Next</button>
+	{:else }
+		<GameOver/>
+	{/if}
 </main>
 
 <style></style>
