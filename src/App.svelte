@@ -10,15 +10,23 @@
 		() => Promise<Event>
 	>;
 	const data = await Promise.all(Object.values(modules).map((load) => load()));
-	const events: Event[] = [];
-	// add multiple occurrences of each event. Reference is fine, but otherwise we can clone or spread.
-	for (const event of data) {
-		events.push(event);
-		events.push(event);
-	}
-	shuffleArray(events);
 
 	let currentIndex = $state(0);
+	let events: Event[] = $state([])
+
+	function setupGame(data: Event[]): Event[] {
+		const events: Event[] = [];
+		// add multiple occurrences of each event. Reference is fine, but otherwise we can clone or spread.
+		for (const event of data) {
+			events.push(event);
+			events.push(event);
+		}
+		shuffleArray(events);
+		currentIndex = 0;
+		return events;
+	}
+
+	events = setupGame(data);
 </script>
 
 <main>
@@ -28,6 +36,7 @@
 		<button onclick={() => currentIndex++}>Next</button>
 	{:else }
 		<GameOver/>
+		<button onclick={() => events = setupGame(data)}>New game</button>
 	{/if}
 </main>
 
