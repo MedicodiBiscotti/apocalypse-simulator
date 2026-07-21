@@ -1,12 +1,24 @@
 /** @type {import("prettier").Config} */
 const config = {
 	useTabs: true,
-	singleQuote: true,
-	trailingComma: 'none',
+	singleQuote: false,
+	trailingComma: "all",
 	printWidth: 100,
-	plugins: ['prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
-	overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
-	tailwindStylesheet: './src/app.css'
+	plugins: [
+		"prettier-plugin-svelte",
+		"prettier-plugin-tailwindcss",
+		"@ianvs/prettier-plugin-sort-imports",
+	],
+	overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
+	tailwindStylesheet: "./src/app.css",
+	importOrder: [
+		"<BUILTIN_MODULES>",
+		"<THIRD_PARTY_MODULES>",
+		"^@core/(.*)$",
+		"^@server/(.*)$",
+		"^@ui/(.*)$",
+		"^[./]",
+	],
 };
 
 export default config;

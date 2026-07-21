@@ -2,7 +2,7 @@
 	let { clazz, event } = $props();
 </script>
 
-<div class="w-sm h-128 p-2 text-center bg-neutral-900 rounded-2xl {clazz}">
-	<p class="text-3xl font-display">{event.name}</p>
-	<p class="font-written text-2xl mt-3">{event.description}</p>
+<div class="h-128 w-sm rounded-2xl bg-neutral-900 p-2 text-center {clazz}">
+	<p class="font-display text-3xl">{event.name}</p>
+	<p class="mt-3 font-written text-2xl">{event.description}</p>
 </div>

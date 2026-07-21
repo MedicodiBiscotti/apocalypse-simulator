@@ -1,3 +1,3 @@
 <div>
-	<h2 class="text-6xl font-display">Game Over</h2>
+	<h2 class="font-display text-6xl">Game Over</h2>
 </div>

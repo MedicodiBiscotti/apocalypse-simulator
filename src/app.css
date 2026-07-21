@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jim+Nightshade&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Jim+Nightshade&display=swap");
+@import "tailwindcss";
 
 @theme {
-	--font-display: 'Cinzel', serif;
-	--font-written: 'Jim Nightshade', cursive;
+	--font-display: "Cinzel", serif;
+	--font-written: "Jim Nightshade", cursive;
 }
 
 :root {

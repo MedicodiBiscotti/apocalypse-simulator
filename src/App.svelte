@@ -1,11 +1,11 @@
 <script lang="ts">
-	import './app.css';
-	import EventCard from './lib/EventCard.svelte';
-	import type { Event } from './types.ts';
-	import { shuffleArray } from './lib/random-utils';
-	import GameOver from './lib/GameOver.svelte';
+	import "./app.css";
+	import EventCard from "./lib/EventCard.svelte";
+	import GameOver from "./lib/GameOver.svelte";
+	import { shuffleArray } from "./lib/random-utils";
+	import type { Event } from "./types.ts";
 
-	const modules = import.meta.glob('./data/*.ts', { import: 'default' }) as Record<
+	const modules = import.meta.glob("./data/*.ts", { import: "default" }) as Record<
 		string,
 		() => Promise<Event>
 	>;
