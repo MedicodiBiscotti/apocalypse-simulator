@@ -1,3 +1,4 @@
+import { gameState } from "../lib/state.svelte";
 import type { Event } from "../types.ts";
 
 export default {
@@ -5,4 +6,18 @@ export default {
 	name: "Abnormal artefact discovered",
 	description:
 		"An object of obscure potency was found in the fields. Damn farmer could have tripped over it. What would have happened then?",
+	options: [
+		{
+			description: "Do something.",
+			result: () => {
+				gameState.clockIndex++;
+			},
+		},
+		{
+			description: "Do something else.",
+			result: () => {
+				gameState.clockIndex++;
+			},
+		},
+	],
 } satisfies Event;

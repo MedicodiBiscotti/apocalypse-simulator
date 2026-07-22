@@ -3,6 +3,7 @@
 	import EventCard from "./lib/EventCard.svelte";
 	import GameOver from "./lib/GameOver.svelte";
 	import { shuffleArray } from "./lib/random-utils";
+	import { gameState } from "./lib/state.svelte";
 	import type { Event } from "./types.ts";
 
 	const modules = import.meta.glob("./data/*.ts", { import: "default" }) as Record<
@@ -11,7 +12,6 @@
 	>;
 	const data = await Promise.all(Object.values(modules).map((load) => load()));
 
-	let currentIndex = $state(0);
 	let events: Event[] = $state([]);
 
 	function setupGame(data: Event[]): Event[] {
@@ -22,7 +22,7 @@
 			events.push(event);
 		}
 		shuffleArray(events);
-		currentIndex = 0;
+		gameState.clockIndex = 0;
 		return events;
 	}
 
@@ -30,13 +30,12 @@
 </script>
 
 <main>
-	{#if currentIndex < events.length}
-		<p>{currentIndex + 1}/{events.length}</p>
-		<EventCard clazz="mb-4" event={events[currentIndex]} />
-		<button onclick={() => currentIndex++}>Next</button>
+	{#if gameState.clockIndex < events.length}
+		<p>{gameState.clockIndex + 1}/{events.length}</p>
+		<EventCard event={events[gameState.clockIndex]} />
 	{:else}
 		<GameOver />
-		<button onclick={() => (events = setupGame(data))}>New game</button>
+		<button class="mt-4" onclick={() => (events = setupGame(data))}>New game</button>
 	{/if}
 </main>
 
