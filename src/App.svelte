@@ -3,7 +3,8 @@
 	import EventCard from "./lib/EventCard.svelte";
 	import GameOver from "./lib/GameOver.svelte";
 	import { shuffleArray } from "./lib/random-utils";
-	import { gameState } from "./lib/state.svelte";
+	import Score from "./lib/Score.svelte";
+	import { gameState, reset } from "./lib/state.svelte";
 	import type { Event } from "./types.ts";
 
 	const modules = import.meta.glob("./data/*.ts", { import: "default" }) as Record<
@@ -22,7 +23,7 @@
 			events.push(event);
 		}
 		shuffleArray(events);
-		gameState.clockIndex = 0;
+		reset();
 		return events;
 	}
 
@@ -32,9 +33,11 @@
 <main>
 	{#if gameState.clockIndex < events.length}
 		<p>{gameState.clockIndex + 1}/{events.length}</p>
+		<Score />
 		<EventCard event={events[gameState.clockIndex]} />
 	{:else}
 		<GameOver />
+		<Score />
 		<button class="mt-4" onclick={() => (events = setupGame(data))}>New game</button>
 	{/if}
 </main>

@@ -19,5 +19,13 @@ export default {
 				gameState.clockIndex++;
 			},
 		},
+		{
+			description: "Buy invitation.",
+			condition: () => gameState.score.wealth > 50,
+			result: () => {
+				gameState.score.wealth -= 20;
+				gameState.clockIndex++;
+			},
+		},
 	],
 } satisfies Event;

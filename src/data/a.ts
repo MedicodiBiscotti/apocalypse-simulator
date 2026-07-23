@@ -10,12 +10,14 @@ export default {
 		{
 			description: "Do something.",
 			result: () => {
+				gameState.score.wealth += 10;
 				gameState.clockIndex++;
 			},
 		},
 		{
 			description: "Do something else.",
 			result: () => {
+				gameState.score.wealth -= 10;
 				gameState.clockIndex++;
 			},
 		},
