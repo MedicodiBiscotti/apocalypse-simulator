@@ -2,7 +2,7 @@ export type Event = {
 	id: string;
 	name: string;
 	description: string;
-	options: Option[];
+	options: [Option, ...Option[]]; // non-empty array
 };
 
 export type Option = {
