@@ -1,11 +1,20 @@
-export const defaultState = {
+type GameState = {
+	// length in game state helps with writing helper functions related to clockIndex.
+	length: number;
+	clockIndex: number;
+	score: {
+		wealth: number;
+	};
+};
+
+export const defaultState: Omit<GameState, "length"> = {
 	clockIndex: 0,
 	score: {
 		wealth: 50,
 	},
 };
 
-export const gameState = $state({
+export const gameState: GameState = $state({
 	...defaultState,
 });
 
@@ -15,11 +24,21 @@ export function incrementGameClock() {
 }
 
 export function reset() {
-	for (const key in gameState) {
+	for (const key in defaultState) {
 		gameState[key] = defaultState[key];
 	}
 }
 
-export function gameOver(len: number) {
-	gameState.clockIndex = len;
+// Checks loss condition.
+export function isGameOver(): boolean {
+	for (const score of Object.values(gameState.score)) {
+		if (score <= 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
+export function gameOver() {
+	gameState.clockIndex = gameState.length;
 }

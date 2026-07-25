@@ -4,17 +4,19 @@ import type { Event } from "../types.ts";
 export default {
 	id: "b",
 	name: "Busy bodies",
-	description: "Uneasiness grows as busy bodies scurry in the night...",
+	description:
+		"Uneasiness grows as busy bodies scurry in the night... A beggar knocks on your door.",
 	options: [
 		{
-			description: "Do something.",
+			description: "Turn them away.",
 			result: () => {
 				gameState.clockIndex++;
 			},
 		},
 		{
-			description: "Do something else.",
+			description: "Pitiful creature. Give them all your money.",
 			result: () => {
+				gameState.score.wealth = 0;
 				gameState.clockIndex++;
 			},
 		},

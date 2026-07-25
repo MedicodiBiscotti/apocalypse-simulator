@@ -4,7 +4,7 @@
 	import GameOver from "./lib/GameOver.svelte";
 	import { shuffleArray } from "./lib/random-utils";
 	import Score from "./lib/Score.svelte";
-	import { gameState, reset } from "./lib/state.svelte";
+	import { gameOver, gameState, isGameOver, reset } from "./lib/state.svelte";
 	import type { Event } from "./types.ts";
 
 	const modules = import.meta.glob("./data/*.ts", { import: "default" }) as Record<
@@ -12,8 +12,6 @@
 		() => Promise<Event>
 	>;
 	const data = await Promise.all(Object.values(modules).map((load) => load()));
-
-	let events: Event[] = $state([]);
 
 	function setupGame(data: Event[]): Event[] {
 		const events: Event[] = [];
@@ -23,17 +21,28 @@
 			events.push(event);
 		}
 		shuffleArray(events);
+		gameState.length = events.length;
 		reset();
 		return events;
 	}
 
-	events = setupGame(data);
+	let events: Event[] = $state(setupGame(data));
+
+	$effect(() => {
+		// Check for game over condition. Make sure we are not already at game over screen to avoid double update.
+		// That check is actually not needed because of automatic dependency arrays.
+		if (isGameOver()) {
+			gameOver();
+		}
+	});
 </script>
 
 <main>
-	{#if gameState.clockIndex < events.length}
-		<p>{gameState.clockIndex + 1}/{events.length}</p>
-		<Score />
+	{#if gameState.clockIndex < gameState.length}
+		<div class="flex items-end justify-between">
+			<Score />
+			<p>{gameState.clockIndex + 1}/{gameState.length}</p>
+		</div>
 		<EventCard event={events[gameState.clockIndex]} />
 	{:else}
 		<GameOver />
