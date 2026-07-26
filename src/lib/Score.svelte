@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { gameState } from "./state.svelte";
+	const { value } = $props();
 </script>
 
-<div class="flex justify-center items-center gap-1">
-	{gameState.score.wealth}
-	<meter min="0" low="31" high="69" max="100" optimum="100" value={gameState.score.wealth}
-		>{gameState.score.wealth}/100</meter
-	>
+<div class="flex items-center justify-center gap-1">
+	{value}
+	<meter min="0" low="31" high="69" max="100" optimum="100" {value}>{value}/100</meter>
 </div>
 
 <style>

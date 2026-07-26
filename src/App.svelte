@@ -3,7 +3,7 @@
 	import EventCard from "./lib/EventCard.svelte";
 	import GameOver from "./lib/GameOver.svelte";
 	import { shuffleArray } from "./lib/random-utils";
-	import Score from "./lib/Score.svelte";
+	import ScoresContainer from "./lib/ScoresContainer.svelte";
 	import { gameOver, gameState, isGameOver, reset } from "./lib/state.svelte";
 	import type { Event } from "./types.ts";
 
@@ -39,14 +39,14 @@
 
 <main>
 	{#if gameState.clockIndex < gameState.length}
-		<div class="flex items-end justify-between">
-			<Score />
-			<p>{gameState.clockIndex + 1}/{gameState.length}</p>
+		<div class="flex items-end justify-between px-2">
+			<ScoresContainer />
+			<p class="font-display text-2xl">{gameState.clockIndex + 1}/{gameState.length}</p>
 		</div>
 		<EventCard event={events[gameState.clockIndex]} />
 	{:else}
 		<GameOver />
-		<Score />
+		<ScoresContainer />
 		<button class="mt-4" onclick={() => (events = setupGame(data))}>New game</button>
 	{/if}
 </main>
