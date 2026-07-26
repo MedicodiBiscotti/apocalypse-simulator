@@ -2,9 +2,25 @@
 	const { value } = $props();
 </script>
 
-<div class="flex items-center justify-center gap-1">
-	{value}
-	<meter min="0" low="31" high="69" max="100" optimum="100" {value}>{value}/100</meter>
+<!-- Text on top of meter. Can use grid-template-areas but only with arbitrary properties in Tailwind.
+ 		 Or position: absolute, top, and transform: translate -->
+<div class="grid text-center [grid-template-areas:'pile']">
+	<meter class="[grid-area:pile]" min="0" low="31" high="69" max="100" optimum="100" {value}
+		>{value}/100</meter
+	>
+	<!-- Needs full height of parent for clip. p tag can't vertical align with that height, hence div. -->
+	<div
+		class="grid size-full items-center [grid-area:pile]"
+		style={`clip-path: inset(${100 - value}% 0 0 0)`}
+	>
+		<p class="text-black">{value}</p>
+	</div>
+	<div
+		class="grid size-full items-center [grid-area:pile]"
+		style={`clip-path: inset(0 0 ${value}% 0)`}
+	>
+		<p class="text-white">{value}</p>
+	</div>
 </div>
 
 <style>
@@ -16,12 +32,13 @@
 		appearance: none;
 		/*background: none;*/
 		background: var(--color-neutral-900);
+		display: block;
 		block-size: 30px;
 		inline-size: 100px;
 	}
 
 	meter::-webkit-meter-inner-element {
-		display: inline-block;
+		display: block;
 		transform: translateX(50%);
 	}
 
