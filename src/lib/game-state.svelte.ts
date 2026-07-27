@@ -24,7 +24,7 @@ export const defaultState: Omit<GameState, "length"> = {
 };
 
 export const gameState: GameState = $state({
-	length: 0,
+	length: 1,
 	...defaultState,
 });
 
@@ -62,14 +62,13 @@ export function reset() {
 
 // Checks loss condition.
 export function isGameOver(): boolean {
+	if (gameState.clockIndex >= gameState.length) {
+		return true;
+	}
 	for (const score of Object.values(gameState.score)) {
 		if (score <= 0) {
 			return true;
 		}
 	}
 	return false;
-}
-
-export function gameOver() {
-	gameState.clockIndex = gameState.length;
 }
