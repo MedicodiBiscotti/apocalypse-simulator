@@ -1,31 +1,19 @@
 <script lang="ts">
 	import "./app.css";
 	import EventCard from "./lib/EventCard.svelte";
+	import {
+		gameOver,
+		gameState,
+		isGameOver,
+		loadEvents,
+		setupGame,
+	} from "./lib/game-state.svelte.js";
 	import GameOver from "./lib/GameOver.svelte";
-	import { shuffleArray } from "./lib/random-utils";
 	import ScoresContainer from "./lib/ScoresContainer.svelte";
-	import { gameOver, gameState, isGameOver, reset } from "./lib/state.svelte";
 	import type { Event } from "./types.ts";
 
-	const modules = import.meta.glob("./data/*.ts", { import: "default" }) as Record<
-		string,
-		() => Promise<Event>
-	>;
-	const data = await Promise.all(Object.values(modules).map((load) => load()));
-
-	function setupGame(data: Event[]): Event[] {
-		const events: Event[] = [];
-		// add multiple occurrences of each event. Reference is fine, but otherwise we can clone or spread.
-		for (const event of data) {
-			events.push(event);
-			events.push(event);
-		}
-		shuffleArray(events);
-		gameState.length = events.length;
-		reset();
-		return events;
-	}
-
+	const data = await loadEvents();
+	// When setup is imported, Svelte doesn't know that setup mutates gameState, so it renders the UI prematurely.
 	let events: Event[] = $state(setupGame(data));
 
 	$effect(() => {
@@ -38,7 +26,9 @@
 </script>
 
 <main>
-	{#if gameState.clockIndex < gameState.length}
+	{#if !events}
+
+	{:else if gameState.clockIndex < gameState.length}
 		<div class="flex items-end justify-between px-2">
 			<ScoresContainer />
 			<p class="font-display text-2xl">{gameState.clockIndex + 1}/{gameState.length}</p>

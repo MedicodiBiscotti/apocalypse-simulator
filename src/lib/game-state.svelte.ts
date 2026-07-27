@@ -1,3 +1,6 @@
+import type { Event } from "../types";
+import { shuffleArray } from "./random-utils";
+
 type GameState = {
 	// length in game state helps with writing helper functions related to clockIndex.
 	length: number;
@@ -21,8 +24,30 @@ export const defaultState: Omit<GameState, "length"> = {
 };
 
 export const gameState: GameState = $state({
+	length: 0,
 	...defaultState,
 });
+
+export function loadEvents() {
+	const modules = import.meta.glob("../data/*.ts", { import: "default" }) as Record<
+		string,
+		() => Promise<Event>
+	>;
+	return Promise.all(Object.values(modules).map((load) => load()));
+}
+
+export function setupGame(data: Event[]): Event[] {
+	const events: Event[] = [];
+	// add multiple occurrences of each event. Reference is fine, but otherwise we can clone or spread.
+	for (const event of data) {
+		events.push(event);
+		events.push(event);
+	}
+	shuffleArray(events);
+	gameState.length = events.length;
+	reset();
+	return events;
+}
 
 // helper since it's a common fallback.
 export function incrementGameClock() {

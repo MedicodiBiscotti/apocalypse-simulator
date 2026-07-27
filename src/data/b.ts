@@ -1,4 +1,4 @@
-import { gameState } from "../lib/state.svelte";
+import { gameState } from "../lib/game-state.svelte.js";
 import type { Event } from "../types.ts";
 
 export default {

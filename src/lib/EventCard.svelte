@@ -1,7 +1,7 @@
 <!-- Safe defaults to prevent softlocks. Type may still be strict, but guards are good to have. -->
 <script lang="ts">
-	import { incrementGameClock } from "../lib/state.svelte";
 	import type { Event } from "../types.ts";
+	import { incrementGameClock } from "./game-state.svelte.js";
 
 	let { event }: { event: Event } = $props();
 

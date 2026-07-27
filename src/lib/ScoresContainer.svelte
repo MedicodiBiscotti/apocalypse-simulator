@@ -1,6 +1,6 @@
 <script>
+	import { gameState } from "./game-state.svelte.js";
 	import Score from "./Score.svelte";
-	import { gameState } from "./state.svelte";
 </script>
 
 <div class="flex items-center justify-center gap-1">
